@@ -1,20 +1,11 @@
 version : '3.8'
 
 services:
-  sm-mysqldb :
-    container_name : 'sm-mysqldb'
-    image : 'mysql:8.0'
-    environment :
-      MYSQL_ROOT_PASSWORD : software
-      MYSQL_DATABASE : software_management
-    volumes :
-      - type : bind
-        source : ./data/mysql/db
-        target : /var/lib/mysql
-
-      - type : bind
-        source : ./data/mysql/log
-        target : /var/log/mysql
+  sqlite-viewer:
+    container_name: sqlite-viewer
+    image: coleifer/sqlite-web
     ports:
-      - "6000:3306"
-
+      - "8081:8080"
+    volumes:
+      - ./data:/data
+    command: sqlite_web -H 0.0.0.0  /data/database.sqlite
